@@ -1,0 +1,80 @@
+
+ans.2 
+
+#include <stdio.h>
+
+int
+main ()
+{
+  printf ("india , china , africa , london , usa ");
+
+  return 0;
+}
+
+--------------------------------------------------------------------------------------------------
+ans.1=
+
+
+#include <stdio.h>
+
+int
+main ()
+{
+  printf (" krishna\n");
+  
+ printf (" kishan\n");
+  printf ("aayush\n");
+  printf (" lokesh\n");
+  printf (" nitesh\n");
+ 
+ 
+ 
+ return 0;
+}
+
+-------------------------------------------------------------------------------------------------------
+ans.3=
+
+#include <stdio.h>
+
+int
+main()
+{
+ printf ( "rajasthan \n");
+    printf ( " andhra pradesh \n");
+    printf ( " bihar\n");
+    printf ( "karnataka \n");
+    printf ( " madhya prades\n");
+}
+
+-----------------------------------------------------------------------------------------------------------
+ans.5=
+
+#include <stdio.h>
+
+int main()
+{
+    printf("football \n");
+    printf("baseball \n");
+    printf(" basketball\n");
+    printf(" icehockey\n");
+    printf(" soccer\n");
+    
+
+    return 0;
+}
+------------------------------------------------------------------------------------------------------------
+ans.4=
+
+#include <stdio.h>
+
+int main()
+{
+    printf("sandwich , bread , steak , fish , rice ");
+    
+    
+
+    return 0;
+}
+
+-------------------------------------------------------------------------------------------------------------
