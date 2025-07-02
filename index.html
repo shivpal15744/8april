@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The One Who Makes My World Beautiful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Landing Section */
+        .landing-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem 0;
+            background: linear-gradient(rgba(255, 182, 193, 0.1), rgba(255, 240, 245, 0.2));
+        }
+
+        .landing-title {
+            font-size: 2.5rem;
+            color: #d63384;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .landing-subtitle {
+            font-size: 1.3rem;
+            color: #6c757d;
+            margin-bottom: 3rem;
+            font-style: italic;
+        }
+
+        .main-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid #fff;
+            box-shadow: 0 20px 40px rgba(214, 51, 132, 0.2);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .main-photo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Photo Gallery */
+        .gallery-section {
+            padding: 5rem 0;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #d63384;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #d63384, #ff69b4);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(214, 51, 132, 0.2);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            font-style: italic;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-item:hover .photo-caption {
+            transform: translateY(0);
+        }
+
+        /* Old Photos Toggle Button */
+        .old-photos-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #d63384, #ff69b4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(214, 51, 132, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: none;
+        }
+
+        .old-photos-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(214, 51, 132, 0.4);
+        }
+
+        .old-photos-toggle i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        /* Old Photos Section */
+        .old-photos-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: none;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .old-photos-section.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .old-photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .old-photo-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            filter: sepia(20%) contrast(1.2);
+        }
+
+        .old-photo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(139, 69, 19, 0.2);
+            filter: sepia(0%) contrast(1);
+        }
+
+        .old-photo-item img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .old-photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(139, 69, 19, 0.8));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            font-style: italic;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .old-photo-item:hover .old-photo-caption {
+            transform: translateY(0);
+        }
+
+        /* Message Section */
+        .message-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 100%);
+        }
+
+        .message-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.1);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #ffe4e1;
+        }
+
+        .message-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #495057;
+            font-style: italic;
+            position: relative;
+        }
+
+        .message-text::before,
+        .message-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: #d63384;
+            position: absolute;
+        }
+
+        .message-text::before {
+            top: -20px;
+            left: -20px;
+        }
+
+        .message-text::after {
+            bottom: -40px;
+            right: -20px;
+        }
+
+        /* Why She's Special Section */
+        .special-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .special-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .special-item {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 100%);
+            transition: transform 0.3s ease;
+        }
+
+        .special-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .special-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .special-text {
+            font-size: 1.2rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: #d63384;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .landing-title {
+                font-size: 2rem;
+            }
+
+            .landing-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .main-photo {
+                width: 250px;
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .message-text {
+                font-size: 1.2rem;
+            }
+
+            .message-box {
+                padding: 2rem;
+            }
+
+            .photo-caption, .old-photo-caption {
+                transform: translateY(0);
+                position: relative;
+                background: rgba(0, 0, 0, 0.8);
+                margin-top: -5px;
+            }
+
+            .photo-grid, .old-photos-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .old-photos-toggle {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .old-photos-toggle i {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: fixed;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Landing Section -->
+    <section class="landing-section">
+        <div class="container">
+            <h1 class="landing-title">The One Who Makes My World Beautiful</h1>
+            <p class="landing-subtitle">A page dedicated to the one who brightens my life with her smile ☀️</p>
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1644844882.jpg-XLQYLYAWxLKNqd5YW9AsiC3NnubVLi.jpeg" alt="Her Beautiful Smile" class="main-photo">
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="section-title">My Favorite Clicks of Her</h2>
+            <div class="photo-grid">
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-88815629.jpg-6yPBD12QRjQrUEPl4R3fmGiizYsqDD.jpeg" alt="Beautiful Mirror Selfie">
+                    <div class="photo-caption">The smile I live for ✨</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-24824321.jpg-6lopiumpu6G3MBDawZIPT6iBhetGF1.jpeg" alt="Radiant Beauty">
+                    <div class="photo-caption">Queen of my world 👑</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-42207601.jpg-eBEZOpj4p5kzGN2BobkKmlv3arpZIi.jpeg" alt="Evening Elegance">
+                    <div class="photo-caption">My sunshine ☀️</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-164766804.jpg-LleWKNWNZciKUVWBGxjnOdi3gWkdER.jpeg" alt="Joyful Moment">
+                    <div class="photo-caption">Cuteness overloaded 😍</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-63492282.jpg-QTtnsIew2TlT1eWXYqBVXN86a19oFu.jpeg" alt="Golden Beauty">
+                    <div class="photo-caption">Pure perfection 💖</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-369993537.jpg-ZMCvNIivTu6TcC8TaveRW13ZFwI0XF.jpeg" alt="Natural Beauty">
+                    <div class="photo-caption">My angel on earth 😇</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-370844986.jpg-HGyGg5U1E2PPj76xkf2JJxe7BMEQqK.jpeg" alt="Gentle Smile">
+                    <div class="photo-caption">Grace personified 🌸</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-294787317.jpg-OzgsIfxQeYof2CEooL5RUSX8I0OdSF.jpeg" alt="Playful Pose">
+                    <div class="photo-caption">Elegance in every way 💫</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-537827410.jpg-2TjRvGVLhYYNHpalOXfVee88RIUVlC.jpeg" alt="Traditional Beauty">
+                    <div class="photo-caption">Royal elegance ✨</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-502162273.jpg-atvhi2HnDFyRcxLu6W4HEs2i5tepE9.jpeg" alt="Motherly Love">
+                    <div class="photo-caption">Love beyond words 💕</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-536956623.jpg-VLD6IvcYYerjbbOB1DLDOaPNxxRU0R.jpeg" alt="Playful Moment">
+                    <div class="photo-caption">Playfully beautiful 💫</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-545576259.jpg-BYj2JH9sXFTomVstKYsyqQHmgm2yZU.jpeg" alt="Moonlight Beauty">
+                    <div class="photo-caption">Moonlight goddess 🌙</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-383647988.jpg-4GHLVXeVs5XFavQ7Fb3a19g4xZXAB4.jpeg" alt="Historical Visit">
+                    <div class="photo-caption">Beauty in every place 🏛️</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-685073537.jpg-q87PdegtERlzn6zjh3Xseur8Kxn1ye.jpeg" alt="Garden Beauty">
+                    <div class="photo-caption">Blooming like a flower 🌺</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-674372764.jpg-HKiUIAaluN1BFa50g0V9Onkrkxw5KJ.jpeg" alt="Nature Beauty">
+                    <div class="photo-caption">One with nature 🌿</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1195654273.jpg-CyS4PBmEgxQ3aTi2oghQ253vucgphB.jpeg" alt="Golden Hour">
+                    <div class="photo-caption">Golden hour goddess ✨</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1551893375.jpg-RFTJ18Z3GSLRzSx1vBheoH80IZvz6G.jpeg" alt="Thoughtful Beauty">
+                    <div class="photo-caption">Lost in thoughts 💭</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1413119925.jpg-cPyaJEDGOJkCuMckX7zryrlevpZ31i.jpeg" alt="Heart Eyes">
+                    <div class="photo-caption">Hearts in my eyes 💕</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1421891302.jpg-K5nhXCGYz4pE2TwhMCTY1Ko24xI0nI.jpeg" alt="Pink Princess">
+                    <div class="photo-caption">My pink princess 🌸</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1562546231.jpg-VFRToj2cO26RVLvUdzm0cVgrHHbdwh.jpeg" alt="Natural Glow">
+                    <div class="photo-caption">Natural beauty shines 🌟</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-2064155535.jpg-qdHdIH3Fxa5R9pQkhQGG66LdyEuCzN.jpeg" alt="Timeless Beauty">
+                    <div class="photo-caption">Timeless elegance 🖤</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-2049396401.jpg-XiYgB9HrQepkJRNU65kozSaY9PjDMj.jpeg" alt="Cultural Beauty">
+                    <div class="photo-caption">Cultural goddess 🏛️</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-2035839658.jpg-ymNxiQbrUqVXDEePvy4wIg3aPasYhK.jpeg" alt="Purple Princess">
+                    <div class="photo-caption">My purple princess 💜</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-1946865001.jpg-BP8sdTrsZGm8HlMxaTKeUp4YytwCJq.jpeg" alt="Garden Angel">
+                    <div class="photo-caption">Garden angel 🌺</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-2130914800.jpg-aQdnqjM0yFP0JtE6tCOi5VBeilH5Pe.jpeg" alt="Sweet Moments">
+                    <div class="photo-caption">Sweet family moments 💙</div>
+                </div>
+                <div class="photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Snapchat-2138484284.jpg-y7Cc2DRURfIINkNSC39MgoF38Exiot.jpeg" alt="Radiant in Orange">
+                    <div class="photo-caption">Radiant in saffron beauty 🧡</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Old Photos Section (Hidden by default) -->
+    <section class="old-photos-section" id="oldPhotosSection">
+        <div class="container">
+            <h2 class="section-title">Our Beautiful Old Memories 📸</h2>
+            <div class="old-photos-grid">
+                <div class="old-photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250625-WA0010.jpg-hEpTTAiRMfByA43K8ImYP1BuN0tJf3.jpeg" alt="Old Memory 1">
+                    <div class="old-photo-caption">Sweet memories together 💕</div>
+                </div>
+                <div class="old-photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/effe22145ada4fd8b539f4299e69d2e5.jpg-HxnzpRyo5B0VvM64AAi2KObilIXCNw.jpeg" alt="Old Memory 2">
+                    <div class="old-photo-caption">Fun times with friends 👫</div>
+                </div>
+                <div class="old-photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250625-WA0011.jpg-VI99HWLSSOyp1iX6pSN4MZh6KxAvOe.jpeg" alt="Old Memory 3">
+                    <div class="old-photo-caption">Casual moments 😎</div>
+                </div>
+                <div class="old-photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5d349e0983014050aa40f8ac43e2a145.jpg-z0wt7zyB7BuOqjLvufZdC7H787ML9N.jpeg" alt="Old Memory 4">
+                    <div class="old-photo-caption">Family gathering 👨‍👩‍👧</div>
+                </div>
+                <div class="old-photo-item">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20250625-WA0013.jpg-Ls0ywotH4PU2DE83O934TyRLb92ze7.jpeg" alt="Old Memory 5">
+                    <div class="old-photo-caption">Beautiful outdoor moments 🌿</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Old Photos Toggle Button -->
+    <button class="old-photos-toggle" id="oldPhotosToggle" title="View Old Photos">
+        <i class="fas fa-camera-retro"></i>
+    </button>
+
+    <!-- Message Section -->
+    <section class="message-section">
+        <div class="container">
+            <h2 class="section-title">From My Heart</h2>
+            <div class="message-box">
+                <p class="message-text">
+                    Tumhare bina sab kuchh adhura sa lagta hai... Tum ho to sab kuchh perfect lagta hai. 
+                    Your presence in my life has transformed everything into something magical. 
+                    Every day with you feels like a beautiful dream that I never want to wake up from.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why She's Special -->
+    <section class="special-section">
+        <div class="container">
+            <h2 class="section-title">Why She's Special</h2>
+            <div class="special-grid">
+                <div class="special-item">
+                    <div class="special-icon">😊</div>
+                    <div class="special-text">Your smile that lights up my world</div>
+                </div>
+                <div class="special-item">
+                    <div class="special-icon">💝</div>
+                    <div class="special-text">Your kindness that touches my soul</div>
+                </div>
+                <div class="special-item">
+                    <div class="special-icon">😂</div>
+                    <div class="special-text">Your laugh that makes everything better</div>
+                </div>
+                <div class="special-item">
+                    <div class="special-icon">💕</div>
+                    <div class="special-text">The way you make me feel complete</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Made with all my love, only for you 💖</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating hearts animation
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💖';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 2000);
+
+        // Old Photos Toggle Functionality
+        const oldPhotosToggle = document.getElementById('oldPhotosToggle');
+        const oldPhotosSection = document.getElementById('oldPhotosSection');
+        let isOldPhotosVisible = false;
+
+        oldPhotosToggle.addEventListener('click', function() {
+            if (isOldPhotosVisible) {
+                // Hide old photos
+                oldPhotosSection.classList.remove('show');
+                setTimeout(() => {
+                    oldPhotosSection.style.display = 'none';
+                }, 500);
+                oldPhotosToggle.innerHTML = '<i class="fas fa-camera-retro"></i>';
+                oldPhotosToggle.title = 'View Old Photos';
+                isOldPhotosVisible = false;
+            } else {
+                // Show old photos
+                oldPhotosSection.style.display = 'block';
+                setTimeout(() => {
+                    oldPhotosSection.classList.add('show');
+                }, 10);
+                oldPhotosToggle.innerHTML = '<i class="fas fa-times"></i>';
+                oldPhotosToggle.title = 'Hide Old Photos';
+                isOldPhotosVisible = true;
+                
+                // Scroll to old photos section
+                oldPhotosSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+
+        // Lightbox functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        
+        // Get all gallery images (both regular and old photos)
+        const galleryImages = document.querySelectorAll('.photo-item img, .old-photo-item img');
+        
+        // Add click event to each gallery image
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = this.src;
+            });
+        });
+        
+        // Close lightbox when clicking the close button
+        lightboxClose.addEventListener('click', function() {
+            lightbox.style.display = 'none';
+        });
+        
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+
+        // Smooth scrolling for better experience
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
